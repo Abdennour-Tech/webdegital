@@ -1,0 +1,264 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "services": "Services",
+    "about": "À propos",
+    "portfolio": "Réalisations",
+    "process": "Processus",
+    "contact": "Contact",
+    "agency": "Agence digitale",
+    "quote": "Demander un devis",
+    "open_menu": "Ouvrir le menu",
+    "close_menu": "Fermer le menu"
+  },
+  "hero": {
+    "badge": "Agence digitale & création web",
+    "title_start": "Créons une présence digitale qui",
+    "title_highlight": "vous ressemble",
+    "desc": "webdegital conçoit des sites web modernes, élégants et performants pour les entreprises, entrepreneurs et professionnels qui veulent se démarquer en ligne.",
+    "cta_quote": "Demander un devis",
+    "cta_portfolio": "Voir nos réalisations",
+    "stats": {
+      "responsive": { "value": "100%", "label": "Responsive" },
+      "design": { "value": "Sur mesure", "label": "Design unique" },
+      "support": { "value": "7j/7", "label": "Accompagnement" }
+    },
+    "badge_float": {
+      "title": "+ Visibilité",
+      "desc": "Des sites pensés pour convertir vos visiteurs en clients."
+    },
+    "marquee": {
+      "1": "Sites vitrines",
+      "2": "Portfolios",
+      "3": "Landing pages",
+      "4": "Sites e-commerce",
+      "5": "Sites entreprise",
+      "6": "Solutions digitales"
+    }
+  },
+  "services": {
+    "section_title": "Nos Services",
+    "cta": "En savoir plus",
+    "items": {
+      "1": {
+        "title": "CRÉATION DE SITES WEB",
+        "desc": "Nous transformons vos processus métier et vos idées innovantes en applications web sur-mesure. Des outils performants, sécurisés et évolutifs."
+      },
+      "2": {
+        "title": "PUBLICITÉ DIGITALE (ADS)",
+        "desc": "Atteignez précisément vos clients cibles sur Google et les réseaux sociaux. Nous gérons vos campagnes publicitaires de A à Z."
+      },
+      "3": {
+        "title": "RÉFÉRENCEMENT NATUREL (SEO)",
+        "desc": "Améliorez votre position sur Google et attirez un trafic qualifié durablement. Nous optimisons la structure technique et le contenu."
+      },
+      "4": {
+        "title": "SÉCURITÉ & MAINTENANCE",
+        "desc": "Votre site web est un actif précieux. Nous assurons sa protection continue contre les menaces, effectuons les mises à jour critiques."
+      },
+      "5": {
+        "title": "DÉVELOPPEMENT D'APPLICATIONS WEB",
+        "desc": "Nous transformons vos processus métier et vos idées innovantes en applications web sur-mesure. Des outils performants, sécurisés et évolutifs."
+      }
+    }
+  },
+  "about": {
+    "eyebrow": "À propos",
+    "title_start": "Une agence qui conçoit des sites",
+    "title_italic": "utiles",
+    "title_end": ", pas seulement beaux.",
+    "desc": "webdegital est une agence digitale spécialisée dans la création de sites web et de solutions digitales modernes. Notre objectif : aider les entreprises, entrepreneurs et professionnels à développer une présence en ligne claire et efficace.",
+    "desc2": "Nous combinons design, simplicité et technologie pour créer des expériences digitales adaptées aux besoins de chaque projet.",
+    "facts": {
+      "1": { "title": "100% Responsive", "text": "Mobile, tablette, ordinateur." },
+      "2": { "title": "Design sur mesure", "text": "Aucun modèle générique." },
+      "3": { "title": "Solutions adaptées", "text": "Pensées pour votre métier." }
+    },
+    "values": {
+      "1": "Qualité",
+      "2": "Simplicité",
+      "3": "Design moderne",
+      "4": "Expérience utilisateur"
+    },
+    "cta": "Nous contacter"
+  },
+  "whyus": {
+    "eyebrow": "Pourquoi webdegital",
+    "title_start": "Votre projet mérite plus qu'un simple",
+    "title_highlight": "site web",
+    "desc": "Nous réunissons design, performance, simplicité et expérience utilisateur pour créer un site qui travaille pour vous — et qui inspire confiance dès la première seconde.",
+    "pillars": {
+      "1": { "title": "Design", "desc": "Des interfaces élégantes et cohérentes avec votre image de marque." },
+      "2": { "title": "Performance", "desc": "Des sites rapides, optimisés et fiables sur tous les supports." },
+      "3": { "title": "Simplicité", "desc": "Une navigation claire, sans friction, qui va droit au but." },
+      "4": { "title": "Expérience", "desc": "Un parcours utilisateur pensé pour convaincre vos visiteurs." }
+    },
+    "extras": {
+      "1": { "title": "Solutions personnalisées", "desc": "Chaque projet est conçu selon vos besoins et vos objectifs réels." },
+      "2": { "title": "Accompagnement", "desc": "Un suivi personnalisé du premier échange à la mise en ligne." }
+    }
+  },
+  "portfolio": {
+    "eyebrow": "Nos Réalisations",
+    "title_start": "Des projets conçus avec",
+    "title_highlight": "exigence",
+    "subtitle": "Découvrez une sélection de projets web réalisés pour créer des expériences digitales modernes, professionnelles et adaptées aux besoins de chaque projet.",
+    "cta": "Discuter de votre projet",
+    "featured_badge": "Projet en vedette",
+    "view_project": "Voir le projet",
+    "view_short": "Voir ↗",
+    "categories": {
+      "site_vitrine": "Site vitrine",
+      "digital_solutions": "Digital Solutions",
+      "medical": "Site web médical",
+      "site_web": "Site web",
+      "restaurant": "Site restaurant"
+    },
+    "projects": {
+      "impact": "Un site vitrine moderne et structuré, conçu pour présenter une entreprise et ses services avec un design professionnel et percutant.",
+      "gp": "Une plateforme digitale élégante mettant en avant des solutions numériques avec une interface moderne et dynamique.",
+      "medilab": "Une expérience web moderne conçue pour présenter une solution digitale dans le domaine médical, avec prise de rendez-vous intégrée.",
+      "append": "Un site web polyvalent au design contemporain, alliant lisibilité et esthétique pour une présentation claire et engageante.",
+      "restaurantly": "Une vitrine chaleureuse et immersive pour un restaurant, avec menu, ambiance et réservation en ligne intégrés."
+    }
+  },
+  "process": {
+    "eyebrow": "Notre méthode",
+    "title_start": "Un processus simple,",
+    "title_highlight": "transparent",
+    "title_end": "et maîtrisé.",
+    "subtitle": "Quatre étapes claires pour transformer votre idée en projet digital abouti.",
+    "steps": {
+      "1": { "title": "Échange", "desc": "Nous discutons de votre projet, de vos besoins et de vos objectifs." },
+      "2": { "title": "Conception", "desc": "Nous définissons la structure, l'expérience utilisateur et le design." },
+      "3": { "title": "Développement", "desc": "Nous transformons votre idée en une solution web moderne et fonctionnelle." },
+      "4": { "title": "Livraison", "desc": "Votre site est finalisé, optimisé et prêt à être mis en ligne." }
+    }
+  },
+  "ctaband": {
+    "badge": "Prêt à démarrer",
+    "title_start": "Votre prochaine présence digitale",
+    "title_highlight": "commence ici",
+    "desc": "Parlons de votre projet et construisons ensemble un site à la hauteur de votre ambition.",
+    "cta": "Parlons de votre projet"
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Parlons de votre projet",
+    "subtitle": "Vous avez une idée, un projet ou simplement une question ? Contactez-nous.",
+    "form": {
+      "name": "Nom complet",
+      "name_ph": "Votre nom",
+      "email": "Email",
+      "email_ph": "vous@exemple.com",
+      "phone": "Téléphone",
+      "phone_ph": "+212 6 00 00 00 00",
+      "project": "Type de projet",
+      "select_option": "Sélectionnez une option",
+      "project_options": {
+        "vitrine": "Site vitrine",
+        "portfolio": "Site portfolio",
+        "landing": "Landing page",
+        "entreprise": "Site entreprise",
+        "refonte": "Refonte de site",
+        "custom": "Autre solution digitale"
+      },
+      "budget": "Budget estimatif",
+      "optional": "(Optionnel)",
+      "select_budget": "Sélectionnez une tranche de budget",
+      "budget_options": {
+        "small": "Moins de 5 000 DH",
+        "medium": "5 000 DH - 15 000 DH",
+        "large": "15 000 DH - 30 000 DH",
+        "xlarge": "Plus de 30 000 DH",
+        "discuss": "À discuter"
+      },
+      "message": "Message",
+      "message_ph": "Décrivez votre projet en quelques lignes…",
+      "submit": "Envoyer ma demande",
+      "submitting": "Envoi en cours…",
+      "whatsapp_direct": "Discuter directement sur WhatsApp →"
+    },
+    "info": {
+      "title": "Coordonnées",
+      "subtitle": "Écrivez-nous ou appelez-nous directement : nous répondons rapidement à chaque demande.",
+      "phone": "Téléphone",
+      "email": "Email",
+      "address": "Adresse",
+      "follow_us": "Suivez-nous"
+    },
+    "toast": {
+      "success": "Votre demande a bien été envoyée !",
+      "success_msg": "Merci pour votre message ! Votre demande a bien été envoyée. Nous vous contacterons dans les plus brefs délais.",
+      "error": "Une erreur est survenue lors de l'envoi de votre demande.",
+      "error_msg": "Une erreur est survenue lors de l'envoi de votre demande. Veuillez réessayer.",
+      "form_error": "Merci de vérifier les champs du formulaire.",
+      "keys_missing": "Clés EmailJS manquantes. Veuillez configurer VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID et VITE_EMAILJS_PUBLIC_KEY dans le fichier .env."
+    },
+    "validation": {
+      "name_required": "Veuillez indiquer votre nom complet.",
+      "email_invalid": "Adresse email invalide.",
+      "project_required": "Veuillez choisir un type de projet.",
+      "message_min": "Votre message doit contenir au moins 10 caractères."
+    }
+  },
+  "footer": {
+    "desc": "Création de sites web et solutions digitales pour développer votre présence en ligne.",
+    "nav_title": "Navigation",
+    "services_title": "Services",
+    "contact_title": "Contact",
+    "address": "5 Avenue Mimosa, Ain Sebaa, Casablanca",
+    "services_list": {
+      "1": "Création de sites web",
+      "2": "Sites vitrines",
+      "3": "Portfolio",
+      "4": "Landing Pages",
+      "5": "Solutions digitales"
+    },
+    "rights": "Tous droits réservés."
+  },
+  "whatsapp": {
+    "label": "Discutons sur WhatsApp",
+    "tooltip": "Discutons sur WhatsApp (+212 638-711276)",
+    "message": "Bonjour webdegital, je souhaite discuter d'un projet digital."
+  },
+  "testimonials": {
+    "eyebrow": "Témoignages",
+    "title_start": "Ce que disent nos",
+    "title_highlight": "clients",
+    "title_end": ".",
+    "subtitle": "La satisfaction de nos clients est notre meilleure carte de visite. Découvrez leurs retours sur notre collaboration.",
+    "items": {
+      "1": {
+        "text": "webdegital a transformé notre présence en ligne. Le site est moderne, rapide et reflète parfaitement notre image de marque. L'équipe est professionnelle et à l'écoute.",
+        "name": "Youssef Benali",
+        "role": "Directeur, Cabinet Benali Conseil"
+      },
+      "2": {
+        "text": "Excellent travail ! Notre landing page a été livrée en temps record avec un design qui dépasse nos attentes. Le taux de conversion a nettement augmenté.",
+        "name": "Salma Tazi",
+        "role": "Fondatrice, Tazi Beauty"
+      },
+      "3": {
+        "text": "Je recommande vivement webdegital. Ils ont su capter l'essence de mon activité et la traduire en un site élégant et fonctionnel. Un vrai partenaire digital.",
+        "name": "Karim Ouazzani",
+        "role": "Architecte indépendant"
+      },
+      "4": {
+        "text": "Suivi impeccable de A à Z. L'équipe répond rapidement, propose des solutions créatives et livre un travail soigné. Notre site vitrine est exactement ce que nous voulions.",
+        "name": "Nadia El Fassi",
+        "role": "Gérante, Clinique El Fassi"
+      },
+      "5": {
+        "text": "Nous cherchions une agence fiable pour refondre notre site. webdegital a su comprendre nos besoins dès le premier échange. Résultat professionnel et livraison rapide.",
+        "name": "Omar Chakir",
+        "role": "Responsable marketing, Groupe Chakir"
+      },
+      "6": {
+        "text": "Un site moderne et performant, livré dans les délais. L'approche sur mesure de webdegital fait vraiment la différence par rapport aux solutions génériques du marché.",
+        "name": "Fatima Zahra Idrissi",
+        "role": "Chef de projet, Start-up Maroc"
+      }
+    }
+  }
+}
