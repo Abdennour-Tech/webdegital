@@ -1,14 +1,14 @@
-import { useState, type FormEvent } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import { Mail, MapPin, Phone, Send, Facebook, Instagram, Linkedin, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-import emailjs from "@emailjs/browser";
+import { QRCodeSVG } from "qrcode.react";
 import { CONTACT } from "@/lib/site";
-import { Reveal } from "./reveal";
 import { SectionHeading } from "./section-heading";
 import { btnPrimary, container } from "./ui-bits";
 import { cn } from "@/lib/utils";
+import { useInView } from "@/hooks/use-in-view";
 
 const projectOptionKeys = [
   "vitrine",
@@ -28,7 +28,7 @@ const budgetOptionKeys = [
 ];
 
 const fieldClass =
-  "w-full rounded-xl border border-input bg-background px-4 py-3 text-sm text-foreground transition-colors placeholder:text-muted-foreground/70 focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 disabled:opacity-60 disabled:cursor-not-allowed";
+  "w-full rounded-xl border border-input bg-background px-4 py-3 text-sm text-foreground transition-all duration-300 placeholder:text-muted-foreground/70 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15 disabled:opacity-60 disabled:cursor-not-allowed";
 
 export function Contact() {
   const { t } = useTranslation();
@@ -38,6 +38,15 @@ export function Contact() {
     type: "success" | "error";
     message: string;
   } | null>(null);
+  const [siteUrl, setSiteUrl] = useState("https://webdegital.com");
+
+  const { ref: sectionRef, isInView } = useInView<HTMLDivElement>({ threshold: 0.1 }, true);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setSiteUrl(window.location.origin);
+    }
+  }, []);
 
   const schema = z.object({
     name: z.string().trim().min(2, t("contact.validation.name_required")).max(100),
@@ -75,54 +84,47 @@ export function Contact() {
     setStatusState(null);
     setIsSubmitting(true);
 
-    const serviceId =
-      import.meta.env.VITE_EMAILJS_SERVICE_ID || process.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId =
-      import.meta.env.VITE_EMAILJS_TEMPLATE_ID || process.env.VITE_EMAILJS_TEMPLATE_ID;
-    const publicKey =
-      import.meta.env.VITE_EMAILJS_PUBLIC_KEY || process.env.VITE_EMAILJS_PUBLIC_KEY;
-
-    if (!serviceId || !templateId || !publicKey) {
-      console.warn("EmailJS credentials missing.");
-      setStatusState({
-        type: "error",
-        message: t("contact.toast.error_msg"),
-      });
-      toast.error(t("contact.toast.keys_missing"));
-      setIsSubmitting(false);
-      return;
-    }
-
     try {
-      const templateParams = {
-        name: result.data.name,
-        email: result.data.email,
-        phone: result.data.phone && result.data.phone.trim() ? result.data.phone : "N/A",
-        projectType: result.data.projectType,
-        budget: result.data.budget && result.data.budget.trim() ? result.data.budget : "N/A",
-        message: result.data.message,
-        reply_to: result.data.email,
-      };
-
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
-
-      setStatusState({
-        type: "success",
-        message: t("contact.toast.success_msg"),
+      const response = await fetch("https://formspree.io/f/xjybywel", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        body: new FormData(form),
       });
-      toast.success(t("contact.toast.success"));
-      form.reset();
+
+      if (response.ok) {
+        setStatusState({
+          type: "success",
+          message: "Votre message a été envoyé avec succès ! Nous vous répondrons rapidement.",
+        });
+        toast.success(t("contact.toast.success"));
+        form.reset();
+      } else {
+        const errorData = await response.json();
+        console.error("Formspree error:", errorData);
+        throw new Error("Failed to submit form");
+      }
     } catch (err) {
-      console.error("EmailJS submission error:", err);
+      console.error("Submission error:", err);
       setStatusState({
         type: "error",
-        message: t("contact.toast.error_msg"),
+        message: "Une erreur est survenue. Veuillez réessayer ou nous contacter directement par téléphone ou email.",
       });
       toast.error(t("contact.toast.error"));
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  const inputGroupClass = cn(
+    "min-w-0 transition-all duration-700 ease-out motion-reduce:transition-none motion-reduce:transform-none group",
+    isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+  );
+  
+  const labelClass = "mb-2 block text-sm font-medium text-foreground transition-colors duration-300 group-focus-within:text-accent";
+  
+  const bounceClass = "transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] motion-reduce:transition-none motion-reduce:transform-none";
 
   return (
     <section id="contact" className="scroll-mt-24 bg-background py-24 lg:py-32">
@@ -133,12 +135,15 @@ export function Contact() {
           subtitle={t("contact.subtitle")}
         />
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-[1.25fr_1fr]">
-          <Reveal className="min-w-0">
+        <div ref={sectionRef} className="mt-14 grid gap-8 lg:grid-cols-[1.25fr_1fr]">
+          <div className="min-w-0">
             <form
               onSubmit={onSubmit}
               noValidate
-              className="rounded-3xl border border-border bg-card p-6 shadow-soft sm:p-9"
+              className={cn(
+                "rounded-3xl border border-border bg-card p-6 shadow-soft sm:p-9 transition-all duration-700 ease-out motion-reduce:transition-none motion-reduce:transform-none",
+                isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              )}
             >
               {statusState ? (
                 <div
@@ -171,8 +176,8 @@ export function Contact() {
               ) : null}
 
               <div className="grid gap-5 sm:grid-cols-2">
-                <div className="min-w-0">
-                  <label htmlFor="name" className="mb-2 block text-sm font-medium text-foreground">
+                <div className={inputGroupClass} style={{ transitionDelay: '100ms' }}>
+                  <label htmlFor="name" className={labelClass}>
                     {t("contact.form.name")} <span className="text-destructive">*</span>
                   </label>
                   <input
@@ -191,8 +196,8 @@ export function Contact() {
                   ) : null}
                 </div>
 
-                <div className="min-w-0">
-                  <label htmlFor="email" className="mb-2 block text-sm font-medium text-foreground">
+                <div className={inputGroupClass} style={{ transitionDelay: '160ms' }}>
+                  <label htmlFor="email" className={labelClass}>
                     {t("contact.form.email")} <span className="text-destructive">*</span>
                   </label>
                   <input
@@ -211,8 +216,8 @@ export function Contact() {
                   ) : null}
                 </div>
 
-                <div className="min-w-0">
-                  <label htmlFor="phone" className="mb-2 block text-sm font-medium text-foreground">
+                <div className={inputGroupClass} style={{ transitionDelay: '220ms' }}>
+                  <label htmlFor="phone" className={labelClass}>
                     {t("contact.form.phone")}
                   </label>
                   <input
@@ -227,10 +232,10 @@ export function Contact() {
                   />
                 </div>
 
-                <div className="min-w-0">
+                <div className={inputGroupClass} style={{ transitionDelay: '280ms' }}>
                   <label
                     htmlFor="projectType"
-                    className="mb-2 block text-sm font-medium text-foreground"
+                    className={labelClass}
                   >
                     {t("contact.form.project")} <span className="text-destructive">*</span>
                   </label>
@@ -260,121 +265,162 @@ export function Contact() {
                 </div>
               </div>
 
-              <div className="mt-5 min-w-0">
-                <label htmlFor="budget" className="mb-2 block text-sm font-medium text-foreground">
-                  {t("contact.form.budget")}{" "}
-                  <span className="text-xs text-muted-foreground">{t("contact.form.optional")}</span>
-                </label>
-                <select
-                  id="budget"
-                  name="budget"
-                  defaultValue=""
-                  disabled={isSubmitting}
-                  className={fieldClass}
-                >
-                  <option value="">{t("contact.form.select_budget")}</option>
-                  {budgetOptionKeys.map((key) => {
-                    const label = t(`contact.form.budget_options.${key}`);
-                    return (
-                      <option key={key} value={label}>
-                        {label}
-                      </option>
-                    );
-                  })}
-                </select>
+              <div className={inputGroupClass} style={{ transitionDelay: '340ms' }}>
+                <div className="mt-5">
+                  <label htmlFor="budget" className={labelClass}>
+                    {t("contact.form.budget")}{" "}
+                    <span className="text-xs text-muted-foreground font-normal">{t("contact.form.optional")}</span>
+                  </label>
+                  <select
+                    id="budget"
+                    name="budget"
+                    defaultValue=""
+                    disabled={isSubmitting}
+                    className={fieldClass}
+                  >
+                    <option value="">{t("contact.form.select_budget")}</option>
+                    {budgetOptionKeys.map((key) => {
+                      const label = t(`contact.form.budget_options.${key}`);
+                      return (
+                        <option key={key} value={label}>
+                          {label}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
               </div>
 
-              <div className="mt-5 min-w-0">
-                <label htmlFor="message" className="mb-2 block text-sm font-medium text-foreground">
-                  {t("contact.form.message")} <span className="text-destructive">*</span>
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={5}
-                  maxLength={1000}
-                  disabled={isSubmitting}
-                  placeholder={t("contact.form.message_ph")}
-                  className={cn(fieldClass, "resize-y")}
-                  aria-invalid={!!errors.message}
-                />
-                {errors.message ? (
-                  <p className="mt-1.5 text-xs text-destructive">{errors.message}</p>
-                ) : null}
+              <div className={inputGroupClass} style={{ transitionDelay: '400ms' }}>
+                <div className="mt-5">
+                  <label htmlFor="message" className={labelClass}>
+                    {t("contact.form.message")} <span className="text-destructive">*</span>
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={5}
+                    maxLength={1000}
+                    disabled={isSubmitting}
+                    placeholder={t("contact.form.message_ph")}
+                    className={cn(fieldClass, "resize-y")}
+                    aria-invalid={!!errors.message}
+                  />
+                  {errors.message ? (
+                    <p className="mt-1.5 text-xs text-destructive">{errors.message}</p>
+                  ) : null}
+                </div>
               </div>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={cn(btnPrimary, "mt-6 w-full sm:w-auto disabled:opacity-70 disabled:cursor-not-allowed")}
-              >
-                {isSubmitting ? (
-                  <>
-                    {t("contact.form.submitting")}
-                    <Loader2 size={16} className="animate-spin" />
-                  </>
-                ) : (
-                  <>
-                    {t("contact.form.submit")}
-                    <Send size={16} className="rtl:rotate-180" />
-                  </>
+              <div 
+                className={cn(
+                  "relative mt-6 inline-block w-full sm:w-auto transition-all duration-700 ease-out motion-reduce:transition-none motion-reduce:transform-none",
+                  isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}
-              </button>
+                style={{ transitionDelay: '460ms' }}
+              >
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={cn(
+                    btnPrimary,
+                    "btn-shimmer-effect relative z-10 w-full sm:w-auto transition-transform duration-300 hover:scale-[1.03] active:scale-[0.97]",
+                    "disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  )}
+                >
+                  {isSubmitting ? (
+                    <>
+                      {t("contact.form.submitting")}
+                      <Loader2 size={16} className="animate-spin" />
+                    </>
+                  ) : (
+                    <>
+                      {t("contact.form.submit")}
+                      <Send size={16} className="rtl:rotate-180" />
+                    </>
+                  )}
+                </button>
+              </div>
             </form>
-          </Reveal>
+          </div>
 
-          <Reveal delay={120} className="min-w-0">
-            <div className="relative h-full overflow-hidden rounded-3xl bg-primary p-8 text-primary-foreground shadow-card">
+          <div className="min-w-0">
+            <div 
+              className={cn(
+                "relative h-full overflow-hidden rounded-3xl bg-primary p-8 text-primary-foreground shadow-card",
+                "transition-all duration-700 ease-out motion-reduce:transition-none motion-reduce:transform-none",
+                isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              )}
+              style={{ transitionDelay: '150ms' }}
+            >
               <h3 className="text-2xl">{t("contact.info.title")}</h3>
               <p className="mt-3 text-sm leading-relaxed text-primary-foreground/75">
                 {t("contact.info.subtitle")}
               </p>
 
               <ul className="mt-8 space-y-5">
-                <li>
-                  <a
-                    href={CONTACT.phoneHref}
-                    className="group flex min-w-0 items-center gap-4 transition-opacity hover:opacity-90"
-                  >
-                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary-foreground/10">
+                <li
+                  className={cn(bounceClass, isInView ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-50 translate-y-4")}
+                  style={{ transitionDelay: '300ms' }}
+                >
+                  <div className="group flex min-w-0 items-center gap-4 transition-opacity">
+                    <span 
+                      className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary-foreground/10 transition-transform duration-300 group-hover:scale-110 animate-float-icon"
+                      style={{ animationDelay: '0ms' }}
+                    >
                       <Phone size={18} aria-hidden="true" />
                     </span>
                     <span className="min-w-0">
                       <span className="block text-xs tracking-wide text-primary-foreground/60 uppercase">
                         {t("contact.info.phone")}
                       </span>
-                      <span className="block truncate text-sm font-medium group-hover:underline">
+                      <a 
+                        href={CONTACT.phoneHref}
+                        className="block truncate text-sm font-medium hover:underline hover:opacity-90 focus:underline focus:outline-none"
+                      >
                         {CONTACT.phoneDisplay}
-                      </span>
+                      </a>
                     </span>
-                  </a>
+                  </div>
                 </li>
-                <li>
-                  <a
-                    href={CONTACT.emailHref}
-                    className="group flex min-w-0 items-center gap-4 transition-opacity hover:opacity-90"
-                  >
-                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary-foreground/10">
+                <li
+                  className={cn(bounceClass, isInView ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-50 translate-y-4")}
+                  style={{ transitionDelay: '380ms' }}
+                >
+                  <div className="group flex min-w-0 items-center gap-4 transition-opacity">
+                    <span 
+                      className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary-foreground/10 transition-transform duration-300 group-hover:scale-110 animate-float-icon"
+                      style={{ animationDelay: '300ms' }}
+                    >
                       <Mail size={18} aria-hidden="true" />
                     </span>
                     <span className="min-w-0">
                       <span className="block text-xs tracking-wide text-primary-foreground/60 uppercase">
                         {t("contact.info.email")}
                       </span>
-                      <span className="block truncate text-sm font-medium group-hover:underline">
+                      <a 
+                        href={CONTACT.emailHref}
+                        className="block truncate text-sm font-medium hover:underline hover:opacity-90 focus:underline focus:outline-none"
+                      >
                         {CONTACT.email}
-                      </span>
+                      </a>
                     </span>
-                  </a>
+                  </div>
                 </li>
-                <li>
+                <li
+                  className={cn(bounceClass, isInView ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-50 translate-y-4")}
+                  style={{ transitionDelay: '460ms' }}
+                >
                   <a
                     href={CONTACT.addressHref}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group flex min-w-0 items-start gap-4 transition-opacity hover:opacity-90"
                   >
-                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary-foreground/10">
+                    <span 
+                      className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary-foreground/10 transition-transform duration-300 group-hover:scale-110 animate-float-icon"
+                      style={{ animationDelay: '600ms' }}
+                    >
                       <MapPin size={18} aria-hidden="true" />
                     </span>
                     <span className="min-w-0">
@@ -389,30 +435,59 @@ export function Contact() {
                 </li>
               </ul>
 
-              <div className="mt-8 border-t border-primary-foreground/15 pt-6">
-                <p className="text-xs tracking-[0.14em] text-primary-foreground/60 uppercase">
-                  {t("contact.info.follow_us")}
-                </p>
-                <div className="mt-4 flex gap-3">
-                  {[
-                    { Icon: Facebook, label: "Facebook" },
-                    { Icon: Instagram, label: "Instagram" },
-                    { Icon: Linkedin, label: "LinkedIn" },
-                  ].map(({ Icon, label }) => (
-                    <a
-                      key={label}
-                      href="#contact"
-                      aria-label={label}
-                      className="grid h-10 w-10 place-items-center rounded-md border border-primary-foreground/20 transition-colors hover:bg-primary-foreground/10"
-                    >
-                      <Icon size={17} aria-hidden="true" />
-                    </a>
-                  ))}
+              <div className="relative mt-8 pt-6">
+                <div className="absolute top-0 left-0 h-px w-full animate-gradient-sweep rounded-full" />
+                <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
+                <div 
+                  className={cn("transition-all duration-700 ease-out motion-reduce:transition-none", isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4")}
+                  style={{ transitionDelay: '540ms' }}
+                >
+                  <p className="text-xs tracking-[0.14em] text-primary-foreground/60 uppercase">
+                    {t("contact.info.follow_us")}
+                  </p>
+                  <div className="mt-4 flex gap-3">
+                    {[
+                      { Icon: Facebook, label: "Facebook" },
+                      { Icon: Instagram, label: "Instagram" },
+                      { Icon: Linkedin, label: "LinkedIn" },
+                    ].map(({ Icon, label }, idx) => (
+                      <a
+                        key={label}
+                        href="#contact"
+                        aria-label={label}
+                        className={cn(
+                          "grid h-10 w-10 place-items-center rounded-md border border-primary-foreground/20",
+                          "transition-all duration-300 hover:-translate-y-1 hover:bg-primary-foreground hover:text-primary hover:border-transparent hover:shadow-lg",
+                          "motion-reduce:transition-none motion-reduce:transform-none",
+                          "animate-subtle-pulse",
+                          isInView ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
+                        )}
+                        style={{ transitionDelay: `${620 + idx * 80}ms`, animationDelay: `${idx * 200}ms` }}
+                      >
+                        <Icon size={17} aria-hidden="true" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                <div 
+                  className={cn("flex flex-col gap-4 transition-all duration-700 ease-out motion-reduce:transition-none", isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4")}
+                  style={{ transitionDelay: '700ms' }}
+                >
+                  <p className="text-xs tracking-[0.14em] text-primary-foreground/60 uppercase">
+                    Scannez pour visiter le site
+                  </p>
+                  <div className="relative w-fit">
+                    <div className="relative rounded-2xl bg-white p-3 shadow-soft animate-breath-glow transition-transform duration-300 hover:scale-[1.03]">
+                      <QRCodeSVG value={siteUrl} size={110} />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </Reveal>
+          </div>
         </div>
+      </div>
       </div>
     </section>
   );

@@ -112,14 +112,20 @@
       "digital_solutions": "Digital Solutions",
       "medical": "Site web médical",
       "site_web": "Site web",
-      "restaurant": "Site restaurant"
+      "restaurant": "Site restaurant",
+      "real_estate": "Site immobilier",
+      "web_app": "Application web",
+      "education": "Site éducation"
     },
     "projects": {
       "impact": "Un site vitrine moderne et structuré, conçu pour présenter une entreprise et ses services avec un design professionnel et percutant.",
       "gp": "Une plateforme digitale élégante mettant en avant des solutions numériques avec une interface moderne et dynamique.",
       "medilab": "Une expérience web moderne conçue pour présenter une solution digitale dans le domaine médical, avec prise de rendez-vous intégrée.",
       "append": "Un site web polyvalent au design contemporain, alliant lisibilité et esthétique pour une présentation claire et engageante.",
-      "restaurantly": "Une vitrine chaleureuse et immersive pour un restaurant, avec menu, ambiance et réservation en ligne intégrés."
+      "restaurantly": "Une vitrine chaleureuse et immersive pour un restaurant, avec menu, ambiance et réservation en ligne intégrés.",
+      "immobilier_yolaial": "Une plateforme immobilière moderne pour présenter des propriétés avec recherche et filtres intégrés.",
+      "stockpro": "Un système de gestion de stock et d'inventaire intuitif conçu pour faciliter le suivi et la logistique.",
+      "suivi_parents_ecole": "Une plateforme éducative permettant un suivi transparent et fluide entre l'école et les parents d'élèves."
     }
   },
   "process": {

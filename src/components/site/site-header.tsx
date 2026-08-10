@@ -50,19 +50,19 @@ export function SiteHeader() {
       <div
         className={cn(
           container,
-          "grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 transition-all duration-500 lg:flex lg:justify-between",
+          "flex items-center justify-between gap-4 transition-all duration-500",
           scrolled ? "py-3.5" : "py-5",
         )}
       >
         <a
           href="#accueil"
-          className="group flex min-w-0 items-center gap-3"
+          className="relative z-10 flex shrink-0 items-center transition-transform duration-300 hover:scale-105"
           aria-label="webdegital"
         >
           <img
             src={logoImg}
             alt="webdegital Logo"
-            className="h-20 w-auto shrink-0 transition-transform duration-300 group-hover:-rotate-3"
+            className="h-14 w-auto sm:h-16 lg:h-20"
           />
         </a>
 

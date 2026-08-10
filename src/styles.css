@@ -462,3 +462,91 @@
   }
 }
 
+/* --- Contact autonomous animations --- */
+
+@keyframes float-icon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@utility animate-float-icon {
+  animation: float-icon 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes breath-glow {
+  0%, 100% { box-shadow: 0 0 15px oklch(0.6 0.105 58 / 0.3), 0 0 0 1px oklch(0.6 0.105 58 / 0.2); }
+  50% { box-shadow: 0 0 25px oklch(0.6 0.105 58 / 0.6), 0 0 0 2px oklch(0.6 0.105 58 / 0.4); }
+}
+
+@utility animate-breath-glow {
+  animation: breath-glow 3s ease-in-out infinite;
+}
+
+@keyframes subtle-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@utility animate-subtle-pulse {
+  animation: subtle-pulse 3.5s ease-in-out infinite;
+}
+
+@keyframes btn-shimmer {
+  0% { transform: translateX(-150%) skewX(-15deg); }
+  25%, 100% { transform: translateX(250%) skewX(-15deg); }
+}
+
+@utility btn-shimmer-effect {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.2), transparent);
+    animation: btn-shimmer 4.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+}
+
+@keyframes gradient-sweep {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@utility animate-gradient-sweep {
+  background: linear-gradient(90deg, oklch(1 0 0 / 0.15) 0%, oklch(0.6 0.105 58 / 0.6) 50%, oklch(1 0 0 / 0.15) 100%);
+  background-size: 200% auto;
+  animation: gradient-sweep 6s linear infinite;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+}
+
+@utility animate-drift {
+  animation: drift 25s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-icon,
+  .animate-breath-glow,
+  .animate-subtle-pulse,
+  .animate-gradient-sweep,
+  .animate-drift {
+    animation: none;
+  }
+  .btn-shimmer-effect::after {
+    display: none;
+  }
+}
+
+
